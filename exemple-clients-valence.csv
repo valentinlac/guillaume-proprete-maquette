@@ -1,0 +1,6 @@
+nom;adresse;ville;latitude;longitude;tarif;frequence;duree_min;mois_dus;contact
+Librairie Les Pages Vives;9 rue Saint-Jacques;Valence;44,9318;4,8932;60;mensuelle;45;XXXXXXXXXXXX;Mme Langlois
+Cabinet d'architectes Ligne Claire;31 avenue Félix Faure;Valence;44,9295;4,9010;85;mensuelle;75;XXXXXXXXXXXX;M. Navarro
+Boulangerie du Plateau;2 place des Écoles;Chabeuil;44,8995;5,0175;55;quinzaine;45;XXXXXXXXXXXX;Mme Pons
+Garage des Trois Ponts;14 route de Lyon;Saint-Péray;44,9510;4,8420;90;trimestrielle;90;.X..X..X..X.;M. Teixeira
+Résidence Le Belvédère;5 rue des Monts;Guilherand-Granges;44,9385;4,8690;180;mensuelle;150;XXXXXXXXXXXX;Mme Hamel (syndic)
