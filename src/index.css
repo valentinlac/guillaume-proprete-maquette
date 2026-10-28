@@ -1,0 +1,61 @@
+@import "@fontsource/ibm-plex-sans/400.css";
+@import "@fontsource/ibm-plex-sans/500.css";
+@import "@fontsource/ibm-plex-sans/600.css";
+@import "tailwindcss";
+
+/*
+ * Charte de la maquette : outil de travail sobre.
+ * Fond papier, encre presque noire, une seule couleur d'accent (bleu encre).
+ * Les autres couleurs portent un sens : les agents, et les alertes.
+ */
+@theme {
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+
+  --color-papier: #f6f5f1;
+  --color-surface: #ffffff;
+  --color-encre: #1c1b18;
+  --color-encre-2: #4a4843;
+  --color-sourdine: #7d796f;
+  --color-filet: #e6e3db;
+  --color-filet-fort: #cfcbc0;
+  --color-survol: #f1efe9;
+
+  --color-accent: #233f8c;
+  --color-accent-fonce: #1a2f6b;
+  --color-accent-doux: #eceff7;
+
+  --color-alerte: #b42318;
+  --color-alerte-doux: #fbefed;
+  --color-ok: #2b6a4c;
+  --color-ok-doux: #edf5f0;
+  --color-attention: #8f5a00;
+  --color-attention-doux: #fbf4e6;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  background: var(--color-papier);
+  color: var(--color-encre);
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Les cartes Leaflet gardent leur propre typographie. */
+.leaflet-container {
+  font-family: var(--font-sans);
+}
