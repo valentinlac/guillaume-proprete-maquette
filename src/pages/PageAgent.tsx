@@ -8,8 +8,8 @@ import { PastilleAgent } from '../ui/statuts'
 import { formatDateLongue } from '../utils/dates'
 import { formatDuree, formatHeure } from '../utils/format'
 
-/** Démo : le chrono va 60 fois plus vite (1 seconde = 1 minute). */
-const ACCELERATION = 60
+/** Démo : le chrono va 300 fois plus vite (1 seconde = 5 minutes). */
+const ACCELERATION = 300
 
 interface EnCours {
   interventionId: string
@@ -87,7 +87,7 @@ export function PageAgent() {
       <footer className="px-4 pb-6 text-center text-xs text-sourdine">
         <span className="inline-flex items-center gap-1.5"><PastilleAgent couleur={agent.couleur} />{agent.nom}</span>
         <div className="mt-1">S’installe sur l’écran d’accueil comme une application.</div>
-        <div>Démo : le chrono va 60 fois plus vite (1 seconde = 1 minute).</div>
+        <div>Démo : le chrono va 300 fois plus vite (1 seconde = 5 minutes).</div>
       </footer>
     </div>
   )

@@ -1,14 +1,41 @@
-# Aide-mémoire : démo à Damien, mercredi 28/10/2026 à 9h
+# Aide-mémoire : démo V2 à Kevin et Damien, vendredi 13/11/2026 à 11h
 
-Durée visée : 10 minutes. Tout est simulé : aucun SMS, mail ou envoi réel, données fictives.
+Durée visée : 10 minutes. Tout est simulé : aucun SMS, mail, post ou envoi réel, données fictives.
+Adresse en ligne : https://valentinlac.github.io/guillaume-proprete-maquette/
 
 ## Avant d'entrer (2 minutes)
 
-1. `npm run dev`, ouvrir http://localhost:5173, vérifier la connexion internet (fond de carte).
+1. Ouvrir l'adresse en ligne (ou `npm run dev`, puis http://localhost:5173).
 2. Cliquer **Réinitialiser la démo** (en bas à gauche).
-3. Rester sur **Valence (siège)**, page **Planning**.
+3. Rester sur **Valence (siège)**. Dans la maquette, « aujourd'hui » est le mercredi 28/10.
+4. Idéalement : ouvrir `…/#agent` sur un téléphone pour montrer l'app agent en vrai.
 
-## Le parcours
+## Le parcours V2 (ce que vous avez demandé le 04/11)
+
+| # | Je clique | Je dis | À voir |
+|---|-----------|--------|--------|
+| 1 | Menu **App agent (mobile)** (ou `#agent` sur le téléphone) | « Voilà ce que Julien voit le matin : sa tournée, l'adresse, le bouton Waze, la durée prévue, le matériel à prendre. » | Marché Frais de Livron, 2 h prévues, perche et escabeau |
+| 2 | **Démarrer**, laisser tourner environ 30 secondes, **Clôturer** | « Il démarre en arrivant, clôture en partant. Le chrono de la démo va 300 fois plus vite. » | environ 2 h 30 réelles pour 2 h prévues |
+| 3 | Observation, signature au doigt, **Valider le bon** | « Le client signe sur le téléphone, le bon part au bureau. Ça s'installe sur l'écran d'accueil comme une application. » | « OK, bon signé · +30 min » |
+| 4 | **Côté bureau** → Planning, jour du 28/10, onglet journée | « Au bureau, le passage est OK, avec l'écart entre prévu et réel. » | « OK · +30 min », bon signé par Mme Gaillard |
+| 5 | **Ajouter une intervention urgente** → Centre médical du Polygone, jeu. 29/10, **Matin · Julien M.** → **Préparer** | « Un client appelle en urgence. L'outil cale l'urgence et replace ce qui était prévu, comme pour la pluie. » | 3 passages décalés au ven. 30/10 (Drôme Habitat, Supérette du Bourg, Résidence Les Glycines) |
+| 6 | **Tout valider et envoyer** | « Messages de déplacement prêts pour les clients, planning envoyé aux agents. » | « Urgence » en rouge sur le 29/10 |
+| 7 | Onglet **Clients** du planning | « Chaque client a ses contraintes : horaires d'accès, matériel. L'outil ne propose jamais un créneau en dehors des horaires. » | Brasserie du Kiosque : accès de 08:00 à 11:30 |
+| 8 | Menu **Indicateurs**, **Mois en cours** | « Heures réelles par agent, vitreries décalées, CA réalisé. Et surtout : chaque journée est-elle rentable ? » | journées déficitaires en rouge (la journée de Julien du 28/10 si son passage a dépassé) |
+| 9 | Changer le **coût au km** (ex. 0,60 → 1,20) | « Taux horaire selon l'ancienneté, coût au km réglable : vous voyez tout de suite les journées qui coûtent. » | le nombre de journées déficitaires monte |
+| 10 | Menu **LinkedIn** → Kevin → une idée → **Générer le post** → **Valider** ou **Programmer** | « Une photo, une phrase, le post sort dans votre style. Onglet **Style d'écriture** : ce que l'outil a retenu. » | changer pour Damien : même idée, autre ton |
+
+Phrase à dire sur LinkedIn : « Compte entreprise : copier-coller, LinkedIn limite l'API. Comptes personnels : publication automatique après validation. »
+
+## Questions probables (V2)
+
+- **« Ça marche sans réseau sur le chantier ? »** La maquette non. La vraie version garderait le pointage en mémoire et l'enverrait au retour du réseau.
+- **« Les taux horaires sont-ils les nôtres ? »** Non, fictifs (24 à 35 € chargés selon l'ancienneté). À remplacer par vos vrais coûts.
+- **« Les posts sont-ils vraiment générés ? »** Dans la maquette, ce sont des posts préécrits. La vraie version les écrirait à partir de vos anciens posts.
+
+## Annexe : parcours V1 (démo du 28/10)
+
+### Le parcours V1
 
 | # | Je clique | Je dis | Chiffre à voir |
 |---|-----------|--------|----------------|
