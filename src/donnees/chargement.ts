@@ -29,6 +29,10 @@ export interface SourceClient {
   moisDus: string
   /** Nom de l'interlocuteur ; téléphone et e-mail fictifs sont générés. */
   contact: string
+  /** Horaires d'accès, ex. « 08:00-11:30 » (passage seulement dans cette plage). */
+  horaires?: string
+  /** Matériel à prévoir, ex. ['perche', 'nacelle']. */
+  materiel?: string[]
 }
 
 export interface SourceRecurrent {
@@ -98,6 +102,12 @@ function telephoneFictif(h: Hasard): string {
   return `06 39 98 ${groupes.join(' ')}`
 }
 
+export function lireHoraires(texte: string): { ouvertureMin: number; fermetureMin: number } {
+  const m = /^(\d{2}):(\d{2})-(\d{2}):(\d{2})$/.exec(texte)
+  if (!m) throw new Error(`Horaires invalides : « ${texte} » (format attendu 08:00-11:30)`)
+  return { ouvertureMin: +m[1] * 60 + +m[2], fermetureMin: +m[3] * 60 + +m[4] }
+}
+
 export function convertirClient(source: SourceClient): Client {
   const h = creerHasard(hacher(source.id + source.nom))
   return {
@@ -116,6 +126,8 @@ export function convertirClient(source: SourceClient): Client {
       telephone: telephoneFictif(h),
       email: `contact@${slug(source.nom).slice(0, 28)}.exemple.fr`,
     },
+    ...(source.horaires && { horaires: lireHoraires(source.horaires) }),
+    ...(source.materiel && { materiel: source.materiel }),
   }
 }
 

@@ -19,6 +19,7 @@ import { PanneauMeteo } from './planning/PanneauMeteo'
 import { ModaleEnvoiAgents } from './planning/ModaleEnvoiAgents'
 import { PanneauMessages } from './planning/PanneauMessages'
 import { PanneauPluieAuto } from './planning/PanneauPluieAuto'
+import { PanneauUrgence } from './planning/PanneauUrgence'
 import { PanneauMoisSuivant } from './planning/PanneauMoisSuivant'
 import { moisAPreparer } from '../planning/moisSuivant'
 import { METEO_DEMO } from '../donnees/donnees-fictives'
@@ -50,6 +51,7 @@ export function PagePlanning() {
   const aPrevenir = clientsAPrevenir(donnees, dateDuJour).filter((x) => !x.dejaPrevenu && x.modele !== 'rappel_veille').length
   const [meteo, setMeteo] = useState<DateISO | null>(null)
   const [pluieAuto, setPluieAuto] = useState(false)
+  const [urgence, setUrgence] = useState(false)
   const [alerteMasquee, setAlerteMasquee] = useState(false)
   const [envoiOuvert, setEnvoiOuvert] = useState(false)
 
@@ -105,6 +107,7 @@ export function PagePlanning() {
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
+          <Bouton onClick={() => setUrgence(true)}>Ajouter une intervention urgente</Bouton>
           <Bouton onClick={annulerDemain} disabled={!demainAnnulable}>
             Annuler la journée de demain (pluie)
           </Bouton>
@@ -280,6 +283,16 @@ export function PagePlanning() {
           onValide={(texte) => {
             setPluieAuto(false)
             setMessage({ texte })
+          }}
+        />
+      )}
+      {urgence && (
+        <PanneauUrgence
+          onFermer={() => setUrgence(false)}
+          onValide={(texte, date) => {
+            setUrgence(false)
+            setJour(date)
+            setMessage({ texte, date })
           }}
         />
       )}

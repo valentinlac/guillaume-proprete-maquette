@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import type { ReactNode } from 'react'
 import { useEtatDemo } from '../../donnees/EtatDemo'
-import type { DateISO, Intervention } from '../../donnees/types'
+import type { DateISO, Intervention, ModeleMessage } from '../../donnees/types'
 import { clientsAPrevenir, genererMessage } from '../../planning/messages'
 import { changementsParAgent, preparerJourneePluie, validerJourneePluie } from '../../planning/meteo'
+import type { JourneePluiePreparee } from '../../planning/meteo'
 import { Bouton } from '../../ui/Bouton'
 import { PastilleAgent } from '../../ui/statuts'
 import { Tiroir } from '../../ui/Tiroir'
@@ -15,6 +16,13 @@ interface Props {
   onFermer: () => void
   /** Après validation, avec le résumé de ce qui a été fait. */
   onValide: (texte: string) => void
+  /** Préparation déjà faite (ex. intervention urgente) ; sinon, journée de pluie. */
+  preparation?: JourneePluiePreparee
+  titre?: ReactNode
+  /** Message envoyé aux clients touchés. */
+  modele?: ModeleMessage
+  /** Résumé affiché après validation. */
+  resume?: (replaces: number, prevenus: number) => string
 }
 
 /**
@@ -22,13 +30,13 @@ interface Props {
  * passages, rédige les messages aux clients et prépare l'envoi aux agents.
  * L'utilisateur vérifie, ajuste si besoin, et valide une seule fois.
  */
-export function PanneauPluieAuto({ date, onFermer, onValide }: Props) {
+export function PanneauPluieAuto({ date, onFermer, onValide, titre, modele = 'annulation_meteo', resume, ...props }: Props) {
   const { donnees, modifier, dateDuJour } = useEtatDemo()
-  const [preparation] = useState(() => preparerJourneePluie(donnees, date, dateDuJour))
+  const [preparation] = useState(() => props.preparation ?? preparerJourneePluie(donnees, date, dateDuJour))
   const [brouillon, setBrouillon] = useState<Intervention[]>(preparation.interventions)
 
   const messages = clientsAPrevenir({ ...donnees, interventions: brouillon }, dateDuJour).filter(
-    (x) => x.modele === 'annulation_meteo' && !x.dejaPrevenu,
+    (x) => x.modele === modele && !x.dejaPrevenu,
   )
   const exemple = messages[0]
   const sms = exemple ? genererMessage(exemple.modele, { client: exemple.client, intervention: exemple.intervention, entite: donnees.entite, dateDuJour }).sms : ''
@@ -37,15 +45,15 @@ export function PanneauPluieAuto({ date, onFermer, onValide }: Props) {
   const replaces = brouillon.filter((i) => ids.has(i.id) && i.statut !== 'annulee_meteo').length
 
   const valider = () => {
-    modifier((jeu) => validerJourneePluie(jeu, brouillon, dateDuJour))
+    modifier((jeu) => validerJourneePluie(jeu, brouillon, dateDuJour, modele))
     onValide(
-      `Pluie du ${formatDateLongue(date).split(' ')[1]} gérée : ${replaces} passage${replaces > 1 ? 's' : ''} replacé${replaces > 1 ? 's' : ''}, ${messages.length} client${messages.length > 1 ? 's' : ''} prévenu${messages.length > 1 ? 's' : ''} par SMS et mail, planning envoyé aux agents (simulation).`,
+      resume ? resume(replaces, messages.length) : `Pluie du ${formatDateLongue(date).split(' ')[1]} gérée : ${replaces} passage${replaces > 1 ? 's' : ''} replacé${replaces > 1 ? 's' : ''}, ${messages.length} client${messages.length > 1 ? 's' : ''} prévenu${messages.length > 1 ? 's' : ''} par SMS et mail, planning envoyé aux agents (simulation).`,
     )
   }
 
   return (
     <Tiroir
-      titre={<span className="first-letter:uppercase">Pluie {formatDateLongue(date)} : tout est prêt</span>}
+      titre={titre ?? <span className="first-letter:uppercase">Pluie {formatDateLongue(date)} : tout est prêt</span>}
       sousTitre="L’outil a tout préparé. Vérifiez, changez un créneau si besoin, puis validez une seule fois. Rien n’est envoyé avant."
       onFermer={onFermer}
       pied={

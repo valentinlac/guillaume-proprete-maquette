@@ -73,6 +73,8 @@ export interface Intervention {
   dateOrigine?: DateISO
   /** Raison de la replanification (pour le message au client). */
   motif?: 'meteo' | 'deplacement'
+  /** Intervention urgente ajoutée en cours de mois. */
+  urgente?: boolean
   /** Pointage de l'agent (app mobile) : heures réelles, en minutes depuis minuit. */
   debutReel?: number
   finReel?: number

@@ -242,3 +242,16 @@ describe('périodes de recherche', () => {
     expect(p.suivant.libelle).toBe('Le mois prochain (novembre 2026)')
   })
 })
+
+describe('trouver un créneau : horaires du client', () => {
+  it('ne propose que des créneaux dans les horaires d’ouverture', () => {
+    const jeu = jeux.valence
+    const brasserie = jeu.clients.find((c) => c.horaires && c.horaires.fermetureMin <= 11 * 60 + 30)!
+    const props = trouverCreneaux(contexte(jeu), { clientId: brasserie.id, fenetre: { debut: '2026-10-29', fin: '2026-11-30' } }, { nombre: 50 })
+    expect(props.length).toBeGreaterThan(0)
+    for (const p of props) {
+      expect(p.debutMin).toBeGreaterThanOrEqual(brasserie.horaires!.ouvertureMin)
+      expect(p.finMin).toBeLessThanOrEqual(brasserie.horaires!.fermetureMin)
+    }
+  })
+})

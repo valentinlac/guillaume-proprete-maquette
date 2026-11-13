@@ -7,7 +7,7 @@ import { integrerNouveauxClients } from '../../planning/integration'
 import { Bouton } from '../../ui/Bouton'
 import { BadgeFrequence, LIBELLES_FREQUENCE } from '../../ui/statuts'
 import { mois as moisDe } from '../../utils/dates'
-import { formatDuree, formatEuros } from '../../utils/format'
+import { formatDuree, formatEuros, formatHeure } from '../../utils/format'
 
 const INITIALES_MOIS = ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D']
 
@@ -125,6 +125,14 @@ export function ListeClients({ onPlanifier }: { onPlanifier: (clientId: string) 
                     {nouveaux.has(c.id) && <span className="ml-2 text-xs font-medium text-accent">nouveau</span>}
                   </div>
                   <div className="text-xs text-sourdine">{c.contact.nom} · {c.contact.telephone}</div>
+                  {(c.horaires || c.materiel) && (
+                    <div className="text-xs text-attention">
+                      {[
+                        c.horaires && `Accès de ${formatHeure(c.horaires.ouvertureMin)} à ${formatHeure(c.horaires.fermetureMin)}`,
+                        c.materiel && `Matériel : ${c.materiel.join(', ')}`,
+                      ].filter(Boolean).join(' · ')}
+                    </div>
+                  )}
                 </td>
                 <td className="px-3 py-2.5">
                   <div className="text-encre-2">{c.adresse}</div>

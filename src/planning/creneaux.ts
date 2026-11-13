@@ -146,6 +146,8 @@ function evaluerPlacement(
   const avant = calculerJournee(depot, clientsTournee, service)
 
   const etape = journee.etapes[position]
+  // Horaires d'ouverture du client : le passage doit tenir dans la plage.
+  if (client.horaires && (etape.debutMin < client.horaires.ouvertureMin || etape.finMin > client.horaires.fermetureMin)) return null
   const detourMin = journee.routeTotaleMin - avant.routeTotaleMin
   const journeeVide = clientsTournee.length === 0
   const precedent = position > 0 ? clientsTournee[position - 1].nom : null
@@ -174,6 +176,7 @@ function evaluerPlacement(
   ]
   if (!journeeVide) details.push(`Détour ajouté à la tournée : ${detourMin <= 0 ? 'aucun' : `+${detourMin} min`}`)
   if (voisin && voisin.km < 5) details.push(`Même secteur : à ${voisin.km.toFixed(1).replace('.', ',')} km de ${voisin.nom}`)
+  if (client.horaires) details.push(`Dans les horaires du client (${formatHeure(client.horaires.ouvertureMin)} à ${formatHeure(client.horaires.fermetureMin)})`)
   if (ecartAutre < 7) details.push(`Attention : autre passage de ce client à ${ecartAutre} jour${ecartAutre > 1 ? 's' : ''} d’écart`)
 
   return {

@@ -5,7 +5,7 @@
  * passage (« Trouver un créneau » en série) → l'utilisateur ajuste puis confirme
  * → le planning modifié est envoyé aux agents (simulé).
  */
-import type { Agent, DateISO, Intervention, JeuDeDonnees } from '../donnees/types'
+import type { Agent, DateISO, Intervention, JeuDeDonnees, ModeleMessage } from '../donnees/types'
 import { annee, dernierDuMois, formatDate, mois, premierDuMois } from '../utils/dates'
 import { prochainJourTravaille } from './calendrierTravail'
 import { recalerJournee, replacerEnSerie } from './creneaux'
@@ -158,8 +158,13 @@ export function preparerJourneePluie(jeu: JeuPluie, date: DateISO, dateDuJour: D
  * Valide tout d'un coup : planning enregistré, clients touchés prévenus (SMS et
  * mail) et planning envoyé aux agents. Envois simulés.
  */
-export function validerJourneePluie<T extends JeuPluie>(jeu: T, interventions: Intervention[], dateDuJour: DateISO): T {
-  const aPrevenir = clientsAPrevenir({ ...jeu, interventions }, dateDuJour).filter((x) => !x.dejaPrevenu && x.modele === 'annulation_meteo')
+export function validerJourneePluie<T extends JeuPluie>(
+  jeu: T,
+  interventions: Intervention[],
+  dateDuJour: DateISO,
+  modele: ModeleMessage = 'annulation_meteo',
+): T {
+  const aPrevenir = clientsAPrevenir({ ...jeu, interventions }, dateDuJour).filter((x) => !x.dejaPrevenu && x.modele === modele)
   return {
     ...jeu,
     interventions,

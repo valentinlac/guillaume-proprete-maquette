@@ -6,6 +6,9 @@
  * Tout est inventé : aucun nom de client réel. Les coordonnées sont des points
  * réalistes autour de chaque ville (rayon ≈ 30 km).
  *
+ * Contraintes (facultatif) : horaires: '08:00-11:30' (passage seulement dans
+ * cette plage) et materiel: ['perche', 'nacelle'] (affiché sur la tournée).
+ *
  * Mois dus : 12 caractères de janvier à décembre, « X » = passage dû, « . » = non.
  *   ex. 'X..X..X..X..' = janvier, avril, juillet, octobre.
  *
@@ -68,14 +71,14 @@ export const ENTITES: SourceEntite[] = [
     ],
     clients: [
       // Valence centre
-      { id: 'c01', nom: 'Boulangerie Le Fournil des Cordeliers', adresse: '14 rue des Cordeliers', ville: 'Valence', lat: 44.9338, lng: 4.8915, tarif: 70, frequence: 'quinzaine', dureeMin: 60, moisDus: TOUS, contact: 'Mme Faure' },
+      { id: 'c01', nom: 'Boulangerie Le Fournil des Cordeliers', adresse: '14 rue des Cordeliers', ville: 'Valence', lat: 44.9338, lng: 4.8915, tarif: 70, frequence: 'quinzaine', dureeMin: 60, moisDus: TOUS, contact: 'Mme Faure', horaires: '07:00-12:00' },
       { id: 'c02', nom: 'Pharmacie des Arcades', adresse: '8 avenue Victor Hugo', ville: 'Valence', lat: 44.9305, lng: 4.8930, tarif: 55, frequence: 'quinzaine', dureeMin: 45, moisDus: TOUS, contact: 'M. Roux' },
       { id: 'c03', nom: 'Agence Drôme Habitat', adresse: '22 boulevard Bancel', ville: 'Valence', lat: 44.9365, lng: 4.8955, tarif: 65, frequence: 'mensuelle', dureeMin: 60, moisDus: TOUS, contact: 'Mme Chabert' },
-      { id: 'c04', nom: 'Cabinet Morel & Associés', adresse: '5 rue Madier de Montjau', ville: 'Valence', lat: 44.9325, lng: 4.8890, tarif: 95, frequence: 'mensuelle', dureeMin: 90, moisDus: TOUS, contact: 'M. Morel' },
-      { id: 'c05', nom: 'Brasserie du Kiosque', adresse: '2 avenue Gambetta', ville: 'Valence', lat: 44.9300, lng: 4.8905, tarif: 85, frequence: 'quinzaine', dureeMin: 75, moisDus: TOUS, contact: 'M. Bonnet' },
-      { id: 'c06', nom: 'Résidence Les Glycines', adresse: '40 avenue de Romans', ville: 'Valence', lat: 44.9440, lng: 4.9050, tarif: 260, frequence: 'mensuelle', dureeMin: 240, moisDus: TOUS, contact: 'Mme Lambert (syndic)' },
+      { id: 'c04', nom: 'Cabinet Morel & Associés', adresse: '5 rue Madier de Montjau', ville: 'Valence', lat: 44.9325, lng: 4.8890, tarif: 95, frequence: 'mensuelle', dureeMin: 90, moisDus: TOUS, contact: 'M. Morel', horaires: '08:00-10:30' },
+      { id: 'c05', nom: 'Brasserie du Kiosque', adresse: '2 avenue Gambetta', ville: 'Valence', lat: 44.9300, lng: 4.8905, tarif: 85, frequence: 'quinzaine', dureeMin: 75, moisDus: TOUS, contact: 'M. Bonnet', horaires: '08:00-11:30' },
+      { id: 'c06', nom: 'Résidence Les Glycines', adresse: '40 avenue de Romans', ville: 'Valence', lat: 44.9440, lng: 4.9050, tarif: 260, frequence: 'mensuelle', dureeMin: 240, moisDus: TOUS, contact: 'Mme Lambert (syndic)', materiel: ['perche', 'nacelle'] },
       { id: 'c07', nom: "Opticien Vue d'Ici", adresse: '17 Grande Rue', ville: 'Valence', lat: 44.9330, lng: 4.8900, tarif: 50, frequence: 'mensuelle', dureeMin: 45, moisDus: TOUS, contact: 'Mme Garnier' },
-      { id: 'c08', nom: 'Centre médical du Polygone', adresse: '11 avenue de Verdun', ville: 'Valence', lat: 44.9290, lng: 4.9000, tarif: 160, frequence: 'mensuelle', dureeMin: 150, moisDus: TOUS, contact: 'Dr Perrin' },
+      { id: 'c08', nom: 'Centre médical du Polygone', adresse: '11 avenue de Verdun', ville: 'Valence', lat: 44.9290, lng: 4.9000, tarif: 160, frequence: 'mensuelle', dureeMin: 150, moisDus: TOUS, contact: 'Dr Perrin', materiel: ['perche'] },
       // Nord
       { id: 'c09', nom: 'Garage Auto Rhône Nord', adresse: '35 avenue Marc Urtin', ville: 'Bourg-lès-Valence', lat: 44.9520, lng: 4.8960, tarif: 90, frequence: 'mensuelle', dureeMin: 90, moisDus: TOUS, contact: 'M. Blanc' },
       { id: 'c10', nom: 'Supérette du Bourg', adresse: '4 place de la Mairie', ville: 'Bourg-lès-Valence', lat: 44.9480, lng: 4.8930, tarif: 65, frequence: 'quinzaine', dureeMin: 60, moisDus: TOUS, contact: 'M. Moulin' },
@@ -84,11 +87,11 @@ export const ENTITES: SourceEntite[] = [
       { id: 'c13', nom: 'Office notarial Hermitage', adresse: '15 avenue Jean Jaurès', ville: "Tain-l'Hermitage", lat: 45.0670, lng: 4.8430, tarif: 70, frequence: 'mensuelle', dureeMin: 60, moisDus: TOUS, contact: 'Me Arnaud' },
       { id: 'c14', nom: 'Restaurant La Table du Fleuve', adresse: '3 quai du Rhône', ville: 'Tournon-sur-Rhône', lat: 45.0660, lng: 4.8340, tarif: 80, frequence: 'quinzaine', dureeMin: 75, moisDus: TOUS, contact: 'M. Giraud' },
       { id: 'c15', nom: 'Crèche Les Petits Pas', adresse: '10 rue des Écoles', ville: 'Saint-Marcel-lès-Valence', lat: 44.9720, lng: 4.9560, tarif: 95, frequence: 'mensuelle', dureeMin: 90, moisDus: SAUF_AOUT, contact: 'Mme Brun' },
-      { id: 'c16', nom: 'Entrepôt Isère-Rhône Logistique', adresse: 'ZA Les Plaines', ville: 'Châteauneuf-sur-Isère', lat: 45.0150, lng: 4.9350, tarif: 280, frequence: 'semestrielle', dureeMin: 240, moisDus: SEM_AVR, contact: 'M. Fabre' },
+      { id: 'c16', nom: 'Entrepôt Isère-Rhône Logistique', adresse: 'ZA Les Plaines', ville: 'Châteauneuf-sur-Isère', lat: 45.0150, lng: 4.9350, tarif: 280, frequence: 'semestrielle', dureeMin: 240, moisDus: SEM_AVR, contact: 'M. Fabre', materiel: ['nacelle'] },
       // Est
       { id: 'c17', nom: 'Fromagerie des Monts', adresse: '5 place du Marché', ville: 'Chabeuil', lat: 44.8985, lng: 5.0195, tarif: 50, frequence: 'mensuelle', dureeMin: 45, moisDus: TOUS, contact: 'Mme Rey' },
       { id: 'c18', nom: 'Cabinet vétérinaire du Plateau', adresse: '18 route de Valence', ville: 'Chabeuil', lat: 44.9010, lng: 5.0100, tarif: 65, frequence: 'mensuelle', dureeMin: 60, moisDus: TOUS, contact: 'Dr Mercier' },
-      { id: 'c19', nom: 'Hôtel Le Relais du Vercors', adresse: '2 route de Chabeuil', ville: 'Montélier', lat: 44.9330, lng: 5.0290, tarif: 160, frequence: 'quinzaine', dureeMin: 150, moisDus: TOUS, contact: 'M. Dumas' },
+      { id: 'c19', nom: 'Hôtel Le Relais du Vercors', adresse: '2 route de Chabeuil', ville: 'Montélier', lat: 44.9330, lng: 5.0290, tarif: 160, frequence: 'quinzaine', dureeMin: 150, moisDus: TOUS, contact: 'M. Dumas', materiel: ['perche'] },
       { id: 'c20', nom: "Pépinière Les Jardins d'Alixan", adresse: '120 route de Romans', ville: 'Alixan', lat: 44.9750, lng: 5.0300, tarif: 95, frequence: 'trimestrielle', dureeMin: 90, moisDus: TRIM_JAN, contact: 'Mme Gauthier' },
       { id: 'c21', nom: 'Chaussures Le Pas Léger', adresse: '24 rue Jacquemart', ville: 'Romans-sur-Isère', lat: 45.0440, lng: 5.0510, tarif: 65, frequence: 'mensuelle', dureeMin: 60, moisDus: TOUS, contact: 'M. André' },
       { id: 'c22', nom: 'Atelier Cuir & Tradition', adresse: "7 rue de l'Industrie", ville: 'Romans-sur-Isère', lat: 45.0400, lng: 5.0560, tarif: 130, frequence: 'semestrielle', dureeMin: 120, moisDus: SEM_MAI, contact: 'Mme Colin' },
@@ -101,7 +104,7 @@ export const ENTITES: SourceEntite[] = [
       { id: 'c28', nom: 'Carrosserie du Sud', adresse: '9 rue des Artisans', ville: 'Portes-lès-Valence', lat: 44.8710, lng: 4.8800, tarif: 90, frequence: 'trimestrielle', dureeMin: 90, moisDus: TRIM_JAN, contact: 'M. Lopez' },
       { id: 'c29', nom: "Restaurant L'Étoile du Berger", adresse: '1 place de la Halle', ville: 'Étoile-sur-Rhône', lat: 44.8395, lng: 4.8910, tarif: 80, frequence: 'mensuelle', dureeMin: 75, moisDus: TOUS, contact: 'M. Sanchez' },
       { id: 'c30', nom: 'Cave des Vignerons de Beaumont', adresse: '45 route de Montéléger', ville: 'Beaumont-lès-Valence', lat: 44.8625, lng: 4.9425, tarif: 200, frequence: 'semestrielle', dureeMin: 180, moisDus: SEM_AVR, contact: 'M. Charpentier' },
-      { id: 'c31', nom: 'Marché Frais de Livron', adresse: '30 avenue de Provence', ville: 'Livron-sur-Drôme', lat: 44.7730, lng: 4.8440, tarif: 130, frequence: 'quinzaine', dureeMin: 120, moisDus: TOUS, contact: 'Mme Gaillard' },
+      { id: 'c31', nom: 'Marché Frais de Livron', adresse: '30 avenue de Provence', ville: 'Livron-sur-Drôme', lat: 44.7730, lng: 4.8440, tarif: 130, frequence: 'quinzaine', dureeMin: 120, moisDus: TOUS, contact: 'Mme Gaillard', materiel: ['perche', 'escabeau'] },
       { id: 'c32', nom: 'Sud Drôme Conseil', adresse: '12 rue du Temple', ville: 'Livron-sur-Drôme', lat: 44.7700, lng: 4.8410, tarif: 65, frequence: 'mensuelle', dureeMin: 60, moisDus: TOUS, contact: 'M. Robin' },
       { id: 'c33', nom: 'Auto-école Loriol Conduite', adresse: '4 Grande Rue', ville: 'Loriol-sur-Drôme', lat: 44.7480, lng: 4.8230, tarif: 50, frequence: 'trimestrielle', dureeMin: 45, moisDus: TRIM_MAR, contact: 'Mme Picard' },
       { id: 'c34', nom: 'Bureaux Technoparc', adresse: '2 allée des Entrepreneurs', ville: 'Malissard', lat: 44.9010, lng: 4.9530, tarif: 190, frequence: 'mensuelle', dureeMin: 180, moisDus: TOUS, contact: 'M. Guérin' },

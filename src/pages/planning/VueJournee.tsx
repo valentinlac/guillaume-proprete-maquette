@@ -134,7 +134,10 @@ function ListeTournee({ nom, couleur, detail, totalMin, routeMin, maxHeures, mod
           >
             <span className="text-[13px] font-semibold tabular-nums">{formatHeure(l.debutMin!)}</span>
             <span className="min-w-0">
-              <span className="block truncate font-medium">{l.client.nom}</span>
+              <span className="block truncate font-medium">
+                {l.intervention.urgente && <span className="mr-1.5 text-xs font-semibold text-alerte">Urgence</span>}
+                {l.client.nom}
+              </span>
               <span className="block truncate text-xs text-sourdine">
                 {l.client.ville} · {formatDuree(l.client.dureeMin)}
                 {l.finMin! - l.debutMin! > l.client.dureeMin && `, coupé par la pause de midi, fin à ${formatHeure(l.finMin!)}`}
@@ -148,7 +151,7 @@ function ListeTournee({ nom, couleur, detail, totalMin, routeMin, maxHeures, mod
                 </span>
               )}
               {l.client.materiel && l.client.materiel.length > 0 && (
-                <span className="block truncate text-xs text-attention">Matériel : {l.client.materiel.join(', ')}</span>
+                <span className="block truncate text-xs text-attention">Matériel à prévoir : {l.client.materiel.join(', ')}</span>
               )}
             </span>
             <span className="flex items-baseline gap-3 justify-self-end">
