@@ -7,9 +7,10 @@ import type { Page } from './ui/Gabarit'
 const PagePlanning = lazy(() => import('./pages/PagePlanning').then((m) => ({ default: m.PagePlanning })))
 const PageTresorerie = lazy(() => import('./pages/PageTresorerie').then((m) => ({ default: m.PageTresorerie })))
 const PageIndicateurs = lazy(() => import('./pages/PageIndicateurs').then((m) => ({ default: m.PageIndicateurs })))
+const PageLinkedIn = lazy(() => import('./pages/PageLinkedIn').then((m) => ({ default: m.PageLinkedIn })))
 const PageAgent = lazy(() => import('./pages/PageAgent').then((m) => ({ default: m.PageAgent })))
 
-const PAGES: Page[] = ['planning', 'tresorerie', 'indicateurs', 'agent']
+const PAGES: Page[] = ['planning', 'tresorerie', 'indicateurs', 'linkedin', 'agent']
 
 function pageDepuisAdresse(): Page {
   const p = window.location.hash.slice(1) as Page
@@ -56,5 +57,6 @@ function PageCourante({ page }: { page: Page }) {
   const cle = `${entiteId}-${version}`
   if (page === 'agent') return <PageAgent key={cle} />
   if (page === 'indicateurs') return <PageIndicateurs key={cle} />
+  if (page === 'linkedin') return <PageLinkedIn key={cle} />
   return page === 'planning' ? <PagePlanning key={cle} /> : <PageTresorerie key={cle} />
 }
