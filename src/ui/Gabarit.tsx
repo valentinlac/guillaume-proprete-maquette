@@ -3,11 +3,12 @@ import type { ReactNode } from 'react'
 import { useEtatDemo } from '../donnees/EtatDemo'
 import { formatDateLongue } from '../utils/dates'
 
-export type Page = 'planning' | 'tresorerie'
+export type Page = 'planning' | 'tresorerie' | 'agent'
 
 const MENU: { page: Page; libelle: string }[] = [
   { page: 'planning', libelle: 'Planning' },
   { page: 'tresorerie', libelle: 'Trésorerie' },
+  { page: 'agent', libelle: 'App agent (mobile)' },
 ]
 
 interface Props {

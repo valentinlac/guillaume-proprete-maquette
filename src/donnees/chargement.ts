@@ -11,7 +11,7 @@ import type { DateISO } from '../utils/dates'
 import { DATE_DU_JOUR, ENTITES } from './donnees-fictives'
 import { creerHasard, hacher } from './hasard'
 import type { Hasard } from './hasard'
-import type { Agent, Categorie, Client, Entite, Facture, Frequence, JeuDeDonnees, Mouvement } from './types'
+import type { Agent, Categorie, Client, Entite, Facture, Frequence, Intervention, JeuDeDonnees, Mouvement } from './types'
 
 // ─── Format du fichier de données ────────────────────────────────────────────
 
@@ -189,13 +189,29 @@ export function genererMouvements(
     .map((l, i) => ({ id: `${entiteId}-mv${String(i + 1).padStart(3, '0')}`, ...l }))
 }
 
+/**
+ * Tournée du jour pour l'app agent : si personne ne travaille aujourd'hui, la
+ * dernière journée passée de chaque agent est décalée à aujourd'hui (passages
+ * encore à faire).
+ */
+function avecTourneeDuJour(interventions: Intervention[], dateDuJour: DateISO): Intervention[] {
+  if (interventions.some((i) => i.date === dateDuJour)) return interventions
+  const derniereParAgent = new Map<string, DateISO>()
+  for (const i of interventions) {
+    if (i.date < dateDuJour && i.date > (derniereParAgent.get(i.agentId) ?? '')) derniereParAgent.set(i.agentId, i.date)
+  }
+  return interventions.map((i) =>
+    derniereParAgent.get(i.agentId) === i.date ? { ...i, date: dateDuJour, statut: 'planifiee' as const } : i,
+  )
+}
+
 // ─── Point d'entrée ──────────────────────────────────────────────────────────
 
 export function construireJeu(source: SourceEntite, dateDuJour: DateISO = DATE_DU_JOUR): JeuDeDonnees {
   const { agents, clients: sourcesClients, tresorerie, heuresEconomiseesMois, ...entite } = source
   const clients = sourcesClients.map(convertirClient)
   const agentsCopies = agents.map((a) => ({ ...a }))
-  const interventions = planningInitial({ depot: entite.depot, clients, agents: agentsCopies }, dateDuJour).interventions
+  const interventions = avecTourneeDuJour(planningInitial({ depot: entite.depot, clients, agents: agentsCopies }, dateDuJour).interventions, dateDuJour)
   const historique = genererMouvements(source.id, tresorerie, dateDuJour)
   const decisionsRecurrents = Object.fromEntries(
     detecterRecurrents(historique)

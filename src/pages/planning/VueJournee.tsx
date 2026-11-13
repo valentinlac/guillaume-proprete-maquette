@@ -5,6 +5,7 @@ import { estJourTravaille, prochainJourTravaille } from '../../planning/calendri
 import { detailJournee, tourneesDuJour } from '../../planning/vues'
 import type { DetailJournee } from '../../planning/vues'
 import { Bascule } from '../../ui/Onglets'
+import { ecartDureeMin, formatEcart } from '../../planning/pointage'
 import { BadgeStatut, PastilleAgent } from '../../ui/statuts'
 import { ajouterJours, formatDate, formatDateLongue } from '../../utils/dates'
 import { formatDuree, formatHeure } from '../../utils/format'
@@ -140,9 +141,24 @@ function ListeTournee({ nom, couleur, detail, totalMin, routeMin, maxHeures, mod
                 {` · ${l.routeAvantMin} min de route${k === 0 ? ' depuis le dépôt' : ''}`}
                 {l.intervention.dateOrigine && ` · prévu le ${formatDate(l.intervention.dateOrigine).slice(0, 5)}`}
               </span>
+              {l.intervention.signataire && (
+                <span className="block truncate text-xs text-ok">
+                  Bon signé par {l.intervention.signataire}
+                  {l.intervention.observation && ` · « ${l.intervention.observation} »`}
+                </span>
+              )}
+              {l.client.materiel && l.client.materiel.length > 0 && (
+                <span className="block truncate text-xs text-attention">Matériel : {l.client.materiel.join(', ')}</span>
+              )}
             </span>
             <span className="flex items-baseline gap-3 justify-self-end">
-              {l.intervention.statut !== 'planifiee' && <BadgeStatut statut={l.intervention.statut} />}
+              {l.intervention.finReel !== undefined ? (
+                <span className="text-xs font-medium whitespace-nowrap text-ok" title={l.intervention.observation || undefined}>
+                  OK · {formatEcart(ecartDureeMin(l.intervention, l.client)!)}
+                </span>
+              ) : (
+                l.intervention.statut !== 'planifiee' && <BadgeStatut statut={l.intervention.statut} />
+              )}
               {modifiable && l.intervention.statut !== 'terminee' && (
                 <button onClick={() => onDeplacer(l.intervention.id)} className="text-xs font-medium text-accent hover:underline">
                   Déplacer

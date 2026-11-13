@@ -6,9 +6,13 @@ import type { Page } from './ui/Gabarit'
 // Chaque écran est chargé à la demande (la carte pour le planning, les graphiques pour la trésorerie).
 const PagePlanning = lazy(() => import('./pages/PagePlanning').then((m) => ({ default: m.PagePlanning })))
 const PageTresorerie = lazy(() => import('./pages/PageTresorerie').then((m) => ({ default: m.PageTresorerie })))
+const PageAgent = lazy(() => import('./pages/PageAgent').then((m) => ({ default: m.PageAgent })))
+
+const PAGES: Page[] = ['planning', 'tresorerie', 'agent']
 
 function pageDepuisAdresse(): Page {
-  return window.location.hash === '#tresorerie' ? 'tresorerie' : 'planning'
+  const p = window.location.hash.slice(1) as Page
+  return PAGES.includes(p) ? p : 'planning'
 }
 
 export default function App() {
@@ -27,11 +31,20 @@ export default function App() {
 
   return (
     <FournisseurEtatDemo>
-      <Gabarit page={page} allerA={allerA}>
-        <Suspense fallback={<p className="text-sm text-sourdine">Chargement…</p>}>
-          <PageCourante page={page} />
-        </Suspense>
-      </Gabarit>
+      {/* L'app agent s'ouvre plein écran, sans le menu du bureau (pensée pour un téléphone). */}
+      {page === 'agent' ? (
+        <div className="h-full overflow-y-auto">
+          <Suspense fallback={<p className="p-4 text-sm text-sourdine">Chargement…</p>}>
+            <PageCourante page={page} />
+          </Suspense>
+        </div>
+      ) : (
+        <Gabarit page={page} allerA={allerA}>
+          <Suspense fallback={<p className="text-sm text-sourdine">Chargement…</p>}>
+            <PageCourante page={page} />
+          </Suspense>
+        </Gabarit>
+      )}
     </FournisseurEtatDemo>
   )
 }
@@ -40,5 +53,6 @@ export default function App() {
 function PageCourante({ page }: { page: Page }) {
   const { entiteId, version } = useEtatDemo()
   const cle = `${entiteId}-${version}`
+  if (page === 'agent') return <PageAgent key={cle} />
   return page === 'planning' ? <PagePlanning key={cle} /> : <PageTresorerie key={cle} />
 }

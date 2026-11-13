@@ -40,6 +40,10 @@ export interface Client extends Point {
   /** 12 cases, de janvier (0) à décembre (11) : le passage est-il dû ce mois-ci ? */
   moisDus: boolean[]
   contact: Contact
+  /** Contraintes d'accès : passage seulement entre ces heures (minutes depuis minuit). */
+  horaires?: { ouvertureMin: number; fermetureMin: number }
+  /** Matériel à prévoir (perche, nacelle…), affiché sur la tournée du jour. */
+  materiel?: string[]
 }
 
 export interface Agent {
@@ -67,6 +71,13 @@ export interface Intervention {
   dateOrigine?: DateISO
   /** Raison de la replanification (pour le message au client). */
   motif?: 'meteo' | 'deplacement'
+  /** Pointage de l'agent (app mobile) : heures réelles, en minutes depuis minuit. */
+  debutReel?: number
+  finReel?: number
+  observation?: string
+  signataire?: string
+  /** Signature du client, en data URL (image PNG). */
+  signature?: string
 }
 
 export type CanalMessage = 'sms' | 'mail'

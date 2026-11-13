@@ -1,0 +1,11 @@
+{
+  "name": "Guillaume Propreté · Ma tournée",
+  "short_name": "Ma tournée",
+  "start_url": "./#agent",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f6f5f1",
+  "theme_color": "#233f8c",
+  "lang": "fr",
+  "icons": [{ "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}
