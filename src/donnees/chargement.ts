@@ -205,13 +205,32 @@ function avecTourneeDuJour(interventions: Intervention[], dateDuJour: DateISO): 
   )
 }
 
+/**
+ * Passages déjà faits : durée réelle simulée pour les indicateurs. En général
+ * de −5 % à +25 % du prévu ; un passage sur six dérape (+60 % à +90 %).
+ */
+function avecDureesReelles(interventions: Intervention[], clients: Client[]): Intervention[] {
+  const parId = new Map(clients.map((c) => [c.id, c]))
+  return interventions.map((i) => {
+    if (i.statut !== 'terminee') return i
+    const prevue = parId.get(i.clientId)!.dureeMin
+    const h = creerHasard(hacher(i.id))
+    const facteur = h.reel() < 1 / 6 ? 1.6 + h.reel() * 0.3 : 0.95 + h.reel() * 0.3
+    const reelle = Math.round((prevue * facteur) / 5) * 5
+    return { ...i, debutReel: i.debutMin, finReel: i.debutMin + reelle }
+  })
+}
+
 // ─── Point d'entrée ──────────────────────────────────────────────────────────
 
 export function construireJeu(source: SourceEntite, dateDuJour: DateISO = DATE_DU_JOUR): JeuDeDonnees {
   const { agents, clients: sourcesClients, tresorerie, heuresEconomiseesMois, ...entite } = source
   const clients = sourcesClients.map(convertirClient)
   const agentsCopies = agents.map((a) => ({ ...a }))
-  const interventions = avecTourneeDuJour(planningInitial({ depot: entite.depot, clients, agents: agentsCopies }, dateDuJour).interventions, dateDuJour)
+  const interventions = avecDureesReelles(
+    avecTourneeDuJour(planningInitial({ depot: entite.depot, clients, agents: agentsCopies }, dateDuJour).interventions, dateDuJour),
+    clients,
+  )
   const historique = genererMouvements(source.id, tresorerie, dateDuJour)
   const decisionsRecurrents = Object.fromEntries(
     detecterRecurrents(historique)

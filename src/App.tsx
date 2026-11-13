@@ -6,9 +6,10 @@ import type { Page } from './ui/Gabarit'
 // Chaque écran est chargé à la demande (la carte pour le planning, les graphiques pour la trésorerie).
 const PagePlanning = lazy(() => import('./pages/PagePlanning').then((m) => ({ default: m.PagePlanning })))
 const PageTresorerie = lazy(() => import('./pages/PageTresorerie').then((m) => ({ default: m.PageTresorerie })))
+const PageIndicateurs = lazy(() => import('./pages/PageIndicateurs').then((m) => ({ default: m.PageIndicateurs })))
 const PageAgent = lazy(() => import('./pages/PageAgent').then((m) => ({ default: m.PageAgent })))
 
-const PAGES: Page[] = ['planning', 'tresorerie', 'agent']
+const PAGES: Page[] = ['planning', 'tresorerie', 'indicateurs', 'agent']
 
 function pageDepuisAdresse(): Page {
   const p = window.location.hash.slice(1) as Page
@@ -54,5 +55,6 @@ function PageCourante({ page }: { page: Page }) {
   const { entiteId, version } = useEtatDemo()
   const cle = `${entiteId}-${version}`
   if (page === 'agent') return <PageAgent key={cle} />
+  if (page === 'indicateurs') return <PageIndicateurs key={cle} />
   return page === 'planning' ? <PagePlanning key={cle} /> : <PageTresorerie key={cle} />
 }

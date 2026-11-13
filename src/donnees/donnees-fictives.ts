@@ -61,9 +61,10 @@ export const ENTITES: SourceEntite[] = [
     ville: 'Valence',
     type: 'societe',
     depot: { adresse: 'ZA des Auréats, Valence', lat: 44.9165, lng: 4.9105 },
+    // tauxHoraire : coût horaire chargé, en euros, selon l'ancienneté.
     agents: [
-      { id: 'a1', nom: 'Julien M.', heuresMaxJour: 7, zone: 'Nord et Ouest', couleur: '#2f5fb3' },
-      { id: 'a2', nom: 'Sofiane B.', heuresMaxJour: 7, zone: 'Sud et Est', couleur: '#c2602a' },
+      { id: 'a1', nom: 'Julien M.', tauxHoraire: 34, heuresMaxJour: 7, zone: 'Nord et Ouest', couleur: '#2f5fb3' },
+      { id: 'a2', nom: 'Sofiane B.', tauxHoraire: 28, heuresMaxJour: 7, zone: 'Sud et Est', couleur: '#c2602a' },
     ],
     clients: [
       // Valence centre
@@ -177,8 +178,8 @@ export const ENTITES: SourceEntite[] = [
     type: 'franchise',
     depot: { adresse: 'ZA des Allobroges, Romans-sur-Isère', lat: 45.0360, lng: 5.0680 },
     agents: [
-      { id: 'a1', nom: 'Lucas R.', heuresMaxJour: 7, zone: 'Romans et Nord', couleur: '#2f5fb3' },
-      { id: 'a2', nom: 'Inès T.', heuresMaxJour: 7, zone: 'Royans et Sud', couleur: '#c2602a' },
+      { id: 'a1', nom: 'Lucas R.', tauxHoraire: 32, heuresMaxJour: 7, zone: 'Romans et Nord', couleur: '#2f5fb3' },
+      { id: 'a2', nom: 'Inès T.', tauxHoraire: 27, heuresMaxJour: 7, zone: 'Royans et Sud', couleur: '#c2602a' },
     ],
     clients: [
       { id: 'r01', nom: 'Boulangerie Le Pétrin Romanais', adresse: '9 place Jules Nadi', ville: 'Romans-sur-Isère', lat: 45.0445, lng: 5.0500, tarif: 55, frequence: 'quinzaine', dureeMin: 45, moisDus: TOUS, contact: 'Mme Bertrand' },
@@ -260,8 +261,8 @@ export const ENTITES: SourceEntite[] = [
     type: 'franchise',
     depot: { adresse: 'ZA du Meyrol, Montélimar', lat: 44.5440, lng: 4.7420 },
     agents: [
-      { id: 'a1', nom: 'Marc D.', heuresMaxJour: 7, zone: 'Montélimar et Rhône', couleur: '#2f5fb3' },
-      { id: 'a2', nom: 'Chloé P.', heuresMaxJour: 6, zone: 'Est et Drôme provençale', couleur: '#c2602a' },
+      { id: 'a1', nom: 'Marc D.', tauxHoraire: 35, heuresMaxJour: 7, zone: 'Montélimar et Rhône', couleur: '#2f5fb3' },
+      { id: 'a2', nom: 'Chloé P.', tauxHoraire: 27.5, heuresMaxJour: 6, zone: 'Est et Drôme provençale', couleur: '#c2602a' },
     ],
     clients: [
       { id: 'm01', nom: "Confiserie Le Nougat d'Antan", adresse: '12 allées Provençales', ville: 'Montélimar', lat: 44.5575, lng: 4.7500, tarif: 65, frequence: 'quinzaine', dureeMin: 60, moisDus: TOUS, contact: 'Mme Aubert' },

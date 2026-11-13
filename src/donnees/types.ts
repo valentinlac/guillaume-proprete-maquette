@@ -50,6 +50,8 @@ export interface Agent {
   id: string
   nom: string
   heuresMaxJour: number
+  /** Coût horaire chargé de l'agent, en euros (selon l'ancienneté). */
+  tauxHoraire: number
   zone: string
   /** Couleur d'affichage dans le planning. */
   couleur: string
